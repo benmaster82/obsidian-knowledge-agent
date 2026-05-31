@@ -1,0 +1,9 @@
+# Agent-specific config (not shared across the team)
+.claude/
+.cursor/
+.windsurf/
+.aider/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
