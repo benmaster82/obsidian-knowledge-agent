@@ -25,21 +25,35 @@ The pipeline is defined in [`.agents/ingestion-workflow.md`](.agents/ingestion-w
 
 ## Install
 
-### Option A — into your Obsidian vault (Codex / Claude / Cursor / any AGENTS-aware agent)
+One line, no clone required — the installer downloads itself and copies the right files into place.
+
+**As a Claude Code skill** (installs into `~/.claude/skills/`):
 
 ```bash
-./install.sh /path/to/your/vault
+curl -fsSL https://raw.githubusercontent.com/Michael-OvO/obsidian-knowledge-agent/main/install.sh | bash -s -- --skill
 ```
 
-This copies `AGENTS.md` and `.agents/` into your vault root and creates an `Inbox/`. Any agent that reads `AGENTS.md` picks up the pipeline automatically. (Manual: just copy `AGENTS.md` and the `.agents/` folder into your vault root.)
-
-### Option B — as a Claude Code skill
+**Into an Obsidian vault** (copies `AGENTS.md` + `.agents/`, creates an `Inbox/`):
 
 ```bash
-cp -r skills/obsidian-knowledge ~/.claude/skills/
+curl -fsSL https://raw.githubusercontent.com/Michael-OvO/obsidian-knowledge-agent/main/install.sh | bash -s -- /path/to/your/vault
 ```
 
-The agent can then invoke the **`obsidian-knowledge-ingest`** skill when you ask it to ingest material. The skill is self-contained — its reference docs live in `skills/obsidian-knowledge/references/` (kept in sync with `.agents/` via `scripts/sync-skill.sh`).
+Any agent that reads `AGENTS.md` — Codex, Claude, Cursor — then picks up the pipeline automatically. Use `--both /path/to/your/vault` to install the vault files **and** the skill in one go.
+
+<details>
+<summary>From a clone instead</summary>
+
+```bash
+git clone https://github.com/Michael-OvO/obsidian-knowledge-agent
+cd obsidian-knowledge-agent
+./install.sh /path/to/your/vault     # vault files
+./install.sh --skill                 # Claude Code skill
+./install.sh --both /path/to/vault   # both
+```
+
+The skill is self-contained — its reference docs live in `skills/obsidian-knowledge/references/` (kept in sync with `.agents/` via `scripts/sync-skill.sh`).
+</details>
 
 ## Quickstart
 
