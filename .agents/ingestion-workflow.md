@@ -5,8 +5,23 @@
 > **Before Phase 0, read:**
 > - `.agents/style-guide.md` for note quality
 > - `.agents/obsidian-conventions.md` for frontmatter, links, naming, and canvas rules
+> - `.agents/self-evolution.md` for the recall → reflect learning loop (Phase 0 recall, Phase 7 reflect)
 
-**Purpose:** Transform a syllabus, book, paper collection, article, transcript, or topic brief into a navigable knowledge structure with short, clean, teaching-quality notes plus the metadata and navigation needed to support them.
+**Purpose:** Turn raw material — anything from a single link to a whole syllabus — into notes worth keeping, with exactly as much structure as the material needs and no more.
+
+---
+
+## Choose the altitude
+
+Before anything else, decide how much structure the material actually warrants. Pick the **smallest tier that fits**, and escalate only when the input clearly asks for it.
+
+| Tier | Use when the input is… | What you produce | Phases to run |
+|---|---|---|---|
+| **Capture** | a link, a thought, a single article or transcript, a "save this" | one clean note in the best-fit existing folder | 0 (recall + a quick classify) → write the note → 6 (commit) → 7 (reflect) |
+| **Small collection** | a handful of related sources, or a short topic | a few notes + one light `_index.md` | 0–2, a simple index, 4, 7 |
+| **Full build** | a syllabus, a book, or a large/structured paper collection | the complete scaffold: indexes, source notes, navigation, quality pass, concept-graph canvas | all of 0–7 |
+
+The phases below spell out the **full build**. For lighter tiers, running only the phases listed above — and skipping scaffolds, source notes, the canvas, prev/next chains, and the parallel quality pass — is the *correct* behavior, not a shortcut. Never impose more structure than the material or the user asked for. When torn between two tiers, choose the lighter one and offer to go deeper.
 
 ---
 
@@ -22,6 +37,16 @@ The exact target is determined in Phase 0. See `.agents/vault-architecture.md` f
 
 **Input:** Raw material in `Inbox/` (docx, pdf, markdown, URL list, transcript, etc.)
 **Output:** Resolved input profile, target path, and structural map. No files created yet.
+
+### Step 0: Recall learned state
+
+Before classifying, load what this vault has taught you (see `.agents/self-evolution.md`):
+
+- Read `.agents/learned/conventions.md` (if present) — vault-specific overrides that refine the defaults. Apply them this run.
+- Read `.agents/learned/examples.md` (if present) — use the closest input→classification rows as few-shot guidance.
+- Scan `.agents/learned/skills/` — if a playbook's `trigger:` matches this input, follow it instead of re-deriving the approach.
+
+On a fresh vault these files do not exist yet; recall is silent and you proceed normally.
 
 ### Step 1: Locate input
 
@@ -136,7 +161,7 @@ Rules:
 - Apply `.agents/style-guide.md` body-shape rules verbatim
 - **Bullet-first default for `ML/` and `Quant/`:** the body should usually be organized as short explanatory bullet groups, short numbered sequences, equations, code blocks, and diagrams rather than paragraph-heavy prose.
 - **Depth requirement for technical notes:** include enough mechanism, assumptions, tradeoffs, and implementation detail that the note stands on its own as a study resource, not just a summary.
-- **Three-artifact floor for `ML/` and `Quant/`:** every technical lecture or concept note must include **all three** of: (1) at least one runnable code block, (2) at least one LaTeX equation, and (3) at least one Mermaid diagram. Code should be copy-pasteable with imports, not fragments. For other branches, at least one concrete artifact is still expected.
+- **Use the artifacts that teach (technical notes):** a deep `ML/` or `Quant/` note is usually clearest with a runnable code block, a LaTeX equation, and a Mermaid diagram — include each one where it earns its place, and skip any that would just be filler. Code should be copy-pasteable with imports, not fragments. A short note, an overview, or a non-technical note needs none of these. The goal is understanding, not a checklist.
 - **Course:** put week/course metadata in frontmatter or unit indexes; keep the note body reader-facing
 - **Book:** explain the chapter's role naturally instead of using rubric labels
 - **Single Source:** link outward to shared references or related notes when useful
@@ -194,7 +219,7 @@ Parallelism:
 - Tell workers to read `.agents/style-guide.md`; do not paste the whole style guide into the prompt
 - Make explicit that internal analysis should be rewritten into short, clean, reader-facing bullets and numbered sequences rather than hidden rubric prose
 - For STEM material, tell workers to optimize for scientific explanation, not for thesis-driven rhetoric
-- Require workers on `ML/` and `Quant/` notes to hit the three-artifact floor: every note must have at least one runnable code block, one LaTeX equation, and one Mermaid diagram. Code should be copy-pasteable with imports.
+- Tell workers on deep `ML/` and `Quant/` notes to reach for the artifacts that teach — runnable code, an equation, a diagram — using each where it genuinely helps rather than to satisfy a quota. Code should be copy-pasteable with imports.
 
 ---
 
@@ -319,6 +344,26 @@ If the user explicitly approves Inbox clearing, make that a second, separate com
 
 ---
 
+## Phase 7: Reflect and Evolve
+
+**Input:** The completed run, plus any corrections the user made
+**Output:** A journal entry, and (when there is a durable lesson) proposed updates to the vault's learned rules
+
+> **Reference:** Follow `.agents/self-evolution.md` for the full loop and drift-control rules.
+
+This is what makes the agent self-improving: turn the run into a reusable lesson.
+
+1. **Always append to the journal.** Add one dated entry to `.agents/learned/journal.md` (create `.agents/learned/` if needed). Record the input, how you classified it, any corrections, recurring fixes, and the durable lesson (or "none this run"). **Never rewrite earlier entries.**
+2. **Capture durable lessons.** A lesson is durable when it would change a *future* run. Route each one:
+   - a preference/override → edit `.agents/learned/conventions.md` (consolidate into a tight rule set, don't just append);
+   - a classification judgment → add/update a row in `.agents/learned/examples.md`;
+   - a whole new input shape → write a playbook to `.agents/learned/skills/<kebab-name>.md` with a `trigger:` line and steps.
+3. **Surface rule changes for approval.** The journal entry commits freely. Changes to `conventions.md` / `examples.md` / `skills/` are proposals: show the `git diff`, explain each change in one line with its motivating journal entry, and let the user approve before committing.
+
+Corrections are the highest-value signal — when the user fixes something, reflect immediately, not just at the end of the run.
+
+---
+
 ## Error Handling
 
 | Problem | Detection | Resolution |
@@ -402,8 +447,9 @@ If the user explicitly approves Inbox clearing, make that a second, separate com
 
 ## Checklist
 
-Run through before Phase 6. Every box must be checked.
+For a **full build**, run through this before Phase 6. Lighter tiers only need the boxes that apply to them (a Capture, for instance, needs recall, the note itself, links resolving, commit, and reflect — nothing else).
 
+- [ ] Recalled learned conventions / examples / playbooks (Phase 0, Step 0)
 - [ ] Input classified and all variables resolved
 - [ ] Target path and profile determined
 - [ ] Folder scaffold and `_index.md` files created
@@ -414,3 +460,4 @@ Run through before Phase 6. Every box must be checked.
 - [ ] Quality pass completed against `.agents/style-guide.md`
 - [ ] Collection committed
 - [ ] Inbox clearing handled per approval policy
+- [ ] Reflected (Phase 7): journal entry appended; any rule updates proposed for review
