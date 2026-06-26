@@ -5,6 +5,9 @@ argument-hint: [what to ingest, or leave blank to handle Inbox/]
 
 Handle whatever I point you at — or everything in `Inbox/` if I don't say.
 
+**If this folder isn't a vault yet** (no `.agents/` and no notes), don't force a build —
+say so and offer `/obsidian-knowledge:setup` first, then come back to this.
+
 1. **Recall.** If this vault has `.agents/learned/`, read `conventions.md` and
    `examples.md` and scan `.agents/learned/skills/` for a matching playbook. Look at how
    this vault is already organized and plan to fit in, not impose.
