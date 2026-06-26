@@ -1,6 +1,6 @@
 {
   "name": "obsidian-knowledge",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "Self-evolving knowledge agent for Obsidian — from a quick capture to a full course build, for any subject. Matches structure to the material, fits your vault, and learns your conventions from each run.",
   "author": { "name": "Michael-OvO", "url": "https://github.com/Michael-OvO" },
   "homepage": "https://github.com/Michael-OvO/obsidian-knowledge-agent",

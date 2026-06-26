@@ -4,6 +4,23 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project aims to follow
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] — 2026-06-25
+
+### Changed — bolder README, adaptive setup
+- **README restyle**: rewritten in a bold, product-first voice — a hero tagline, a
+  before/after, an "altitude ladder", one tight command table, and a punchy FAQ. Keeps
+  the self-evolution section and the any-agent install; drops nothing functional.
+- **Adaptive `setup`**: now detection-first with three explicit modes — **SCAFFOLD** an
+  empty folder, **ADOPT** an existing vault (read its conventions, impose nothing, fill
+  only the gaps, seed detected conventions for approval), or **RESUME** an already-set-up
+  vault (report status, route to work, don't re-scaffold).
+- **Bootstrap-aware `ingest` / `capture`**: in a folder that isn't a vault yet, they offer
+  `/obsidian-knowledge:setup` instead of failing.
+
+### Fixed
+- Caught the plugin/marketplace manifests up to the CHANGELOG: all four were still
+  pinned at `2.0.0` despite the 2.1.0 command-suite release.
+
 ## [2.1.0] — 2026-06-22
 
 ### Added — a full, discoverable command suite
