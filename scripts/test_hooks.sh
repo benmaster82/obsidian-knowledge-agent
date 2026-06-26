@@ -52,6 +52,17 @@ T="$(newrepo)"
 out="$(cd "$T" && bash "$NUDGE")"; [ -z "$out" ] && ok "nudge: silent on a clean tree" || bad "nudge: should be silent on clean tree"
 rm -rf "$T"
 
+# straight from /setup: scaffold notes + an untracked, never-committed seed journal, nothing
+# committed -> must be SILENT. Setup is not knowledge work, and an uncommitted vault isn't
+# "established" yet, so there is nothing to reflect on. (Regression: the Stop hook used to
+# nag on every turn right after setup until the scaffold was committed.)
+T="$(mktemp -d)"
+( cd "$T" && git init -q && git config user.email t@t.co && git config user.name t \
+   && mkdir -p .agents/learned Inbox ML && printf '# j\n' > .agents/learned/journal.md \
+   && printf '# ML\n' > "ML/_index.md" && printf '# Dashboard\n' > Dashboard.md )
+out="$(cd "$T" && bash "$NUDGE")"; [ -z "$out" ] && ok "nudge: silent right after /setup (uncommitted scaffold + untracked seed journal)" || bad "nudge: fired on a freshly-set-up vault"
+rm -rf "$T"
+
 # note changed + journal.md modified -> silent (reflection recorded)
 T="$(newrepo)"; ( cd "$T" && mkdir -p ML && printf '# n\n' > "ML/N.md" && git add -A && git commit -qm work \
    && printf 'edit\n' >> "ML/N.md" && printf 'entry\n' >> .agents/learned/journal.md )

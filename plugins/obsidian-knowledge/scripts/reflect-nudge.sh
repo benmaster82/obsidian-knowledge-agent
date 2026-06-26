@@ -29,12 +29,20 @@ if ! printf '%s\n' "$STATUS" \
   exit 0
 fi
 
-# Reflection already recorded this session? Suppress only when the journal is TRACKED
-# and changed; an untracked (freshly-seeded) journal must NOT silence the nudge.
+# Only nudge in an ESTABLISHED vault — one whose journal has been committed at least once.
+# A never-committed journal (the state straight after /setup, before the scaffold is
+# committed) means the vault isn't set up yet and there is nothing to reflect on; nagging
+# then is just noise on every Stop. This also stays quiet right after an uncommitted
+# /reflect that seeded the journal — the user already reflected.
+git ls-files --error-unmatch .agents/learned/journal.md >/dev/null 2>&1 || exit 0
+
+# Reflection already recorded this session? The journal is tracked (guaranteed above), so it
+# appears in STATUS only when modified this session -> reflection recorded -> stay quiet. A
+# tracked-but-unchanged journal is absent from STATUS (JLINE empty) -> not yet reflected.
 JLINE="$(printf '%s\n' "$STATUS" | grep -E '^.. "?\.agents/learned/journal\.md("| ->|$)' | head -1 || true)"
 case "$JLINE" in
-  "" | "??"*) : ;;   # absent or untracked seed -> not yet reflected; allow the nudge
-  *) exit 0 ;;       # tracked + changed -> reflection recorded; stay quiet
+  "") : ;;       # tracked + unchanged -> not yet reflected; allow the nudge
+  *) exit 0 ;;   # tracked + changed -> reflection recorded; stay quiet
 esac
 
 MSG="obsidian-knowledge: notes changed this session but the learning journal is untouched. If anything here is worth remembering for next time, consider offering to run /obsidian-knowledge:reflect — optional."

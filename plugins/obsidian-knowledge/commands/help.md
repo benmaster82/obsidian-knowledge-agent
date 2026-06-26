@@ -14,7 +14,7 @@ keeping, and I learn your vault's conventions as we go. Talk to me naturally ("s
 this", "research X", "organize my inbox") or use a command:
 
 ## ▸ Start here
-- `/obsidian-knowledge:setup` — set this folder up as a vault (branches, learning state, a dashboard, an Inbox).
+- `/obsidian-knowledge:setup` — set this folder up as a vault. Adapts: scaffolds an empty folder, or adopts an existing vault and fills only the gaps.
 - `/obsidian-knowledge:help [command]` — this guide. Add a name for detail, e.g. `… :help research`.
 
 ## ▸ Capture & build

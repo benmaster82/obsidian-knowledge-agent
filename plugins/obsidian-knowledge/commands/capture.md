@@ -5,6 +5,9 @@ argument-hint: [the thing to save — a URL, an idea, pasted text, or a file in 
 
 Save this as one clean note. Keep it light — this is a **Capture**, not a full build.
 
+**If this folder isn't a vault yet** (no `.agents/` and no notes), still save the note in
+place — then mention that `/obsidian-knowledge:setup` would give it a proper home.
+
 1. **Recall + fit.** Glance at `.agents/learned/conventions.md` if it exists, and at how
    this vault is already organized, so the note lands in the right folder with matching
    naming and frontmatter.
